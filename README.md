@@ -8,8 +8,7 @@ As the platform team makes changes to the manifests in this repository, the cont
 
 [Use this template](https://github.com/microsoft/multicloud-control-plane-seed/generate) to create a new repository.
 
-Follow instructions in [Multicloud Control Plane Repo](https://github.com/microsoft/multicloud-control-plane) to deploy manifests files.
-
+As you add project-specific deployment definitions to this repository feel free to delete the placeholder `.gitkeep` files.
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
