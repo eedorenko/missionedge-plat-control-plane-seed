@@ -1,0 +1,10 @@
+manifests: ./deploy
+parameters:
+  app: {}
+  image: {}
+  port: {}
+  cpu:
+    default: 1
+  memory:
+    default: 1G
+  replicas: {}
