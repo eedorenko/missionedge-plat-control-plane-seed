@@ -12,7 +12,7 @@ on:
 
 env:
   # TODO: Replace this with your own repository
-  GITOPS_REPO: microsoft/multicloud-control-plane-cluster-gitops-seed
+  GITOPS_REPO: <owner>/<repository>
 
 jobs:
   transform:
@@ -22,7 +22,6 @@ jobs:
       run: |
         git config --global user.name github-actions
         git config --global user.email github-actions@github.com
-        git config --global url."https://${{ secrets.GITOPS_PAT }}@github.com/".insteadOf "https://github.com/"
 
     - name: Clone Control Plane Repo
       uses: actions/checkout@v2
