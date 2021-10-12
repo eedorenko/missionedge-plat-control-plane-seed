@@ -8,6 +8,10 @@ As the platform team makes changes to the manifests in this repository, the cont
 
 [Use this template](https://github.com/microsoft/multicloud-control-plane-seed/generate) to create a new repository.
 
+Configure the [transform action](.github/workflows/transform.yaml) with your values
+* `GITOPS_REPO`: Update the `env` block in the action to point to your cluster gitops repo
+* `GITOPS_PAT`: Create a new GitHub Actions secret that contains a PAT with `repo` scope
+
 As you add project-specific deployment definitions to this repository feel free to delete the placeholder `.gitkeep` files.
 ## Contributing
 
