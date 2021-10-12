@@ -1,0 +1,77 @@
+########
+# Usage:
+# * Update env.GITOPS_REPO to point to your own Cluster GitOps Repo
+# * Create a GitHub Actions secret:
+#   * Name: GITOPS_PAT
+#   * Value: A Personal Access Token with the `repo` scope
+########
+
+on:
+  push:
+    branches: [main]
+
+env:
+  # TODO: Replace this with your own repository
+  GITOPS_REPO: microsoft/multicloud-control-plane-cluster-gitops-seed
+
+jobs:
+  transform:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Configure Git
+      run: |
+        git config --global user.name github-actions
+        git config --global user.email github-actions@github.com
+        git config --global url."https://${{ secrets.GITOPS_PAT }}@github.com/".insteadOf "https://github.com/"
+
+    - name: Clone Control Plane Repo
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ github.repository }}
+        path: 'controlplane'
+        token: ${{ secrets.GITOPS_PAT }}
+
+    - name: Clone Cluster GitOps Repo
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ env.GITOPS_REPO }}
+        path: 'gitops'
+        token: ${{ secrets.GITOPS_PAT }}
+
+    - name: Install transformer
+      run: npm i -g @multicloud-control-plane/transformer
+    
+    - name: Transformer - Update Assignments
+      run: transformer assign ./controlplane
+
+    - name: Commit Assignments
+      id: commit_assignments
+      run: |
+        cd ./controlplane
+        if [ -n "$(git status --porcelain)" ]; then 
+          git add .
+          git commit -m "Updated cluster assignments"
+          git push origin
+        else
+          echo "No new assignments"
+        fi
+
+        SHA=$(git rev-parse HEAD)
+        echo "::set-output name=SHA::$SHA"
+
+    - name: Transformer - Render templates
+      run: transformer render ./controlplane ./gitops
+
+    - name: Transformer - Update GitOps repo
+      run: transformer apply ./controlplane ./gitops
+
+    - name: Commit GitOps changes
+      run: |
+        cd ./gitops
+        if [ -n "$(git status --porcelain)" ]; then
+          git add .
+          git commit -m "Update from control plane commit ${{ steps.commit_assignments.outputs.SHA }}"
+          git push origin main
+        else
+          echo "No changes made to cluster gitops repo"
+        fi
