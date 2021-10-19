@@ -1,0 +1,13 @@
+apiVersion: projectcontour.io/v1
+kind: HTTPProxy
+metadata:
+  name: {{app}}-proxy
+  namespace: {{app}}
+spec:
+  virtualhost:
+    fqdn: {{fqdn}}
+  routes:
+    - services:
+      - name: {{app}}
+        port: 8000
+        
