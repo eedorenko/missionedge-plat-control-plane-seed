@@ -10,4 +10,10 @@ spec:
     # If empty or not present, the deployment is assumed to target any registered Cluster
     environment: <environment>
     geo: <geo>
-  clusters: <number-of-clusters-needed>
+  clusters: <number-of-clusters-needed>.   # REQUIRED: The number of clusters to deploy to, or 'all' for all clusters that match the selector
+  values: 
+    overrides: 
+      # Template values to be set during deployment.
+      # Map of string keys and values that can be used to override template defaults and app values
+      replicas: <number-of-replicas> # Examples of possible values
+      memory: <amount-of-memory>
