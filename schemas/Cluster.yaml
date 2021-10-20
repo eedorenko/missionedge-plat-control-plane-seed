@@ -1,0 +1,10 @@
+kind: Cluster
+metadata:
+  name: <cluster-name> # REQUIRED: unique name of cluster
+  labels: # Map of string keys and values that can be used to organize and categorize (scope and select) objects
+    cloud: <cloud-provider> # Optional: Sample value set {azure, aws, gcp}
+    geo: <geo>
+    region: <region> 
+spec:
+  environments: # One or more environments to which the cluster belongs
+    - <env>
