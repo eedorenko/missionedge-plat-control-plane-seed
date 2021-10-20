@@ -1,0 +1,13 @@
+kind: ApplicationDeployment
+metadata:
+  name: <app-name> # REQUIRED: unique name of application
+spec:
+  repo: <repo-URL>  # REQUIRED: The url to a Git repository where the Application (app.yaml) is located
+  ref: <git-reference>  # REQUIRED: The Git ref (branch/tag/commit) to use
+  path: <app-yaml-path>  # REQUIRED: The path within the repo to the Application (app.yaml) file
+  selector:
+    # Create assignments on clusters with label keys and values matching this selector. 
+    # If empty or not present, the deployment is assumed to target any registered Cluster
+    environment: <environment>
+    geo: <geo>
+  clusters: <number-of-clusters-needed>
