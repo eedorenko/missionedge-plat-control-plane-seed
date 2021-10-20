@@ -9,6 +9,14 @@ If you are unfamiliar with the premise behind the broader solution, please refer
 
 ### Prerequisites
 
+#### Cluster & Flux Installation
+
+This solution assumes that a Kubernetes cluster has been provisioned on your preferred cloud provider (e.g. Azure Kubernetes Service). 
+
+It also assumes that Flux installation/[bootstrapping](https://fluxcd.io/docs/cmd/flux_bootstrap/) is managed outside of this solution.
+
+#### Cluster GitOps Repo & PAT
+
 You'll need to have templated the [Cluster GitOps Seed Repo](https://github.com/microsoft/multicloud-control-plane-cluster-gitops-seed) and have a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) created with `repo` scope.
 
 ### Template this Repo
@@ -28,6 +36,10 @@ A run is triggered after each commit into the repository, so you will see the ch
 Add a cluster definition under the `/clusters` directory. You can find the schema for a cluster definition in the `/schemas` directory [here](https://github.com/microsoft/multicloud-control-plane-seed/tree/main/schemas/Cluster.yaml). 
 
 It's important to note that the values under `labels` are free-form text and not enforced. It is used to help match application assignments but is not validated for any type of ground-truth accuracy.
+
+Once a new cluster is registered in this repo, a new subdirectory will populate in the Cluster GitOps repo. You can point your cluster's Flux instance to the correct `/clusters` subdirectory. 
+
+For example, for a cluster named `cluster-314`, Flux on that cluster would point to the path `clusters/cluster-314`.
 
 ### Register Application(s)
 
