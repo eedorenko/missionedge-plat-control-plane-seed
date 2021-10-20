@@ -43,7 +43,7 @@ For example, for a cluster named `cluster-314`, Flux on that cluster would point
 
 ### Register Application(s)
 
-Add an `ApplicationDeployment` file that points to the application's `app.yaml` file found in one of the application seed repos.
+Add an `ApplicationDeployment` file that points to the application's `app.yaml` file found in one of the application repos (generated from one of the seeds below).
 
  Repository | Location
 -|-
