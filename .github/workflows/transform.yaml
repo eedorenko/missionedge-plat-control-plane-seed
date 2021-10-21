@@ -10,6 +10,8 @@ on:
   push:
     branches: [main]
 
+concurrency: transform
+
 env:
   # TODO: Replace this with your own repository
   GITOPS_REPO: <owner>/<repository>
