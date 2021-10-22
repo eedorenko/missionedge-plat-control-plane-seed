@@ -8,5 +8,5 @@ spec:
     app: {{app}}
   ports:
     - protocol: TCP
-      port: 8000
+      port: {{port}}
       targetPort: {{port}}
