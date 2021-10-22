@@ -4,10 +4,14 @@ metadata:
   name: {{app}}-ingress
   namespace: {{app}}
 spec:
-  ingressClassName: contour
-  defaultBackend:
-    service:
-      name: default-http-backend
-      port:
-        number: 80
-        
+  rules:
+  - host: {{fqdn}}
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: {{app}}
+            port:
+              number: {{port}}
