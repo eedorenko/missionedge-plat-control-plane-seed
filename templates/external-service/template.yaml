@@ -8,3 +8,4 @@ parameters:
   memory:
     default: 1G
   replicas: {}
+  fqdn: {}
