@@ -35,6 +35,16 @@ jobs:
         path: 'controlplane'
         token: ${{ secrets.GITOPS_PAT }}
 
+    - name: Update template references
+      working-directory: controlplane
+      run: |
+        sed -i -- "s|microsoft/multicloud-control-plane-seed|${GITHUB_REPOSITORY}|g" templates/*.yaml
+        if [ -n "$(git status --porcelain)" ]; then 
+          git add .
+          git commit -m "[no ci] Updated template references"
+          git push origin
+        fi
+
     - name: Clone Cluster GitOps Repo
       uses: actions/checkout@v2
       with:
@@ -50,11 +60,11 @@ jobs:
 
     - name: Commit Assignments
       id: commit_assignments
+      working-directory: controlplane
       run: |
-        cd ./controlplane
         if [ -n "$(git status --porcelain)" ]; then 
           git add .
-          git commit -m "Updated cluster assignments"
+          git commit -m "[no ci] Updated cluster assignments"
           git push origin
         else
           echo "No new assignments"
@@ -70,8 +80,8 @@ jobs:
       run: transformer apply ./controlplane ./gitops
 
     - name: Commit GitOps changes
+      working-directory: gitops
       run: |
-        cd ./gitops
         if [ -n "$(git status --porcelain)" ]; then
           git add .
           git commit -m "Update from control plane commit ${{ steps.commit_assignments.outputs.SHA }}"
