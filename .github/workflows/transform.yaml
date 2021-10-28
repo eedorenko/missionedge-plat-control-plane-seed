@@ -38,7 +38,7 @@ jobs:
     - name: Update template references
       working-directory: controlplane
       run: |
-        sed -i -- "s|microsoft/multicloud-control-plane-seed|${GITHUB_REPOSITORY}|g" templates/*.yaml
+        sed -i -- "s|microsoft/coral-control-plane-seed|${GITHUB_REPOSITORY}|g" templates/*.yaml
         if [ -n "$(git status --porcelain)" ]; then 
           git add .
           git commit -m "[no ci] Updated template references"
@@ -52,11 +52,11 @@ jobs:
         path: 'gitops'
         token: ${{ secrets.GITOPS_PAT }}
 
-    - name: Install transformer
-      run: npm i -g @multicloud-control-plane/transformer
+    - name: Install Coral CLI
+      run: npm i -g @coraldev/cli
     
-    - name: Transformer - Update Assignments
-      run: transformer assign ./controlplane
+    - name: Coral - Update Assignments
+      run: coral assign ./controlplane
 
     - name: Commit Assignments
       id: commit_assignments
@@ -73,11 +73,11 @@ jobs:
         SHA=$(git rev-parse HEAD)
         echo "::set-output name=SHA::$SHA"
 
-    - name: Transformer - Render templates
-      run: transformer render ./controlplane ./gitops
+    - name: Coral - Render templates
+      run: coral render ./controlplane ./gitops
 
-    - name: Transformer - Update GitOps repo
-      run: transformer apply ./controlplane ./gitops
+    - name: Coral - Update GitOps repo
+      run: coral apply ./controlplane ./gitops
 
     - name: Commit GitOps changes
       working-directory: gitops
