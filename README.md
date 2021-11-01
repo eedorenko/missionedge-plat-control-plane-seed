@@ -47,8 +47,8 @@ Add an `ApplicationDeployment` file that points to the application's `app.yaml` 
 
  Repository | Location
 -|-
-.Net Application Seed | https://github.com/microsoft/dotnet-api-template/
-Java Application Seed | https://github.com/microsoft/java-api-template/
+.Net Application Seed | https://github.com/microsoft/coral-template-dotnet
+Java Application Seed | https://github.com/microsoft/coral-template-java
 
 The schema for the `ApplicationDeployment.yaml` can be found in the `/schemas` directory [here](https://github.com/microsoft/coral-control-plane-seed/tree/main/schemas/ApplicationDeployment.yaml)
 
