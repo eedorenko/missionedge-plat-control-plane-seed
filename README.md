@@ -58,7 +58,7 @@ Java Application Seed | https://github.com/microsoft/coral-template-java
 
 The schema for the `ApplicationDeployment.yaml` can be found in the `/schemas` directory [here](https://github.com/microsoft/coral-control-plane-seed/tree/main/schemas/ApplicationDeployment.yaml)
 
-An application needs to be assigned to an specific workspace. A folder with the same name of the workspace must exist inside the `applications` folder. As you add project-specific deployment definitions to this repository feel free to delete the placeholder `.gitkeep` files.
+An application needs to be assigned to a specific workspace. A folder with the same name as the workspace must exist inside the `applications` folder. As you add project-specific deployment definitions to this repository feel free to delete the placeholder `.gitkeep` files.
 
 ## Contributing
 
