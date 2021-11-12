@@ -6,4 +6,4 @@ spec:
   manifests: prometheus
   targets:
     all:
-      cluster: all
+      clusters: all

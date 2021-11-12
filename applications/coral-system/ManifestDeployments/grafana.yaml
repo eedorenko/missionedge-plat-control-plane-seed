@@ -6,4 +6,4 @@ spec:
   manifests: grafana
   targets:
     all:
-      cluster: all
+      clusters: all
