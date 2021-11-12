@@ -54,7 +54,7 @@ jobs:
         token: ${{ secrets.GITOPS_PAT }}
 
     - name: Install Coral CLI
-      run: npm i -g @coraldev/cli@0.0.10
+      run: npm i -g @coraldev/cli@0.0.11
     
     - name: Coral - Update Assignments
       run: coral assign ./controlplane
