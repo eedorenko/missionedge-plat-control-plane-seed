@@ -43,7 +43,7 @@ For example, for a cluster named `cluster-314`, Flux on that cluster would point
 
 ### Create workspaces
 
-A coral workspace is a collection of one or more applications. The concept of workspace enables filtering and configuring access to only a specific group of applications.
+A workspace is a collection of one or more applications. The concept of workspace enables filtering and configuring access to only a specific group of applications.
 
 Add a `Workspace` file inside the workspaces folder. The schema for the `Workspace.yaml` can be found in the `/schemas` directory [here](https://github.com/microsoft/coral-control-plane-seed/tree/main/schemas/Workspace.yaml).
 
