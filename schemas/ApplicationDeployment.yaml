@@ -8,7 +8,7 @@ spec:
     ref: <git-reference>  # REQUIRED: The Git ref (branch/tag/commit) to use
     path: <app-yaml-path>  # REQUIRED: The path within the repo to the Application (app.yaml) file
   targets:
-    <target-name>: # REQUIRED: target name, examples: dev, prod, prod-aws, prod-azure, etc.
+    <target-name>: # REQUIRED: target name, examples: dev, prod, staging-westus, prod-southcentralus, etc.
       app:  # we can override values from the main spec for an specific target
         repo: <repo-URL>
         ref: <git-reference>
