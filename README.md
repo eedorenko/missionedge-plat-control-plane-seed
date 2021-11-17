@@ -41,6 +41,12 @@ Once a new cluster is registered in this repo, a new subdirectory will populate 
 
 For example, for a cluster named `cluster-314`, Flux on that cluster would point to the path `clusters/cluster-314`.
 
+### Create workspaces
+
+A workspace is a collection of one or more applications. The concept of workspace enables filtering and configuring access to only a specific group of applications.
+
+Add a `Workspace` file inside the workspaces folder. The template for the `Workspace.yaml` can be found in the `/schemas` directory [here](https://github.com/microsoft/coral-control-plane-seed/tree/main/schemas/Workspace.yaml).
+
 ### Register Application(s)
 
 Add an `ApplicationDeployment` file that points to the application's `app.yaml` file found in one of the application repos (generated from one of the seeds below).
@@ -52,8 +58,8 @@ Java Application Seed | https://github.com/microsoft/coral-template-java
 
 The schema for the `ApplicationDeployment.yaml` can be found in the `/schemas` directory [here](https://github.com/microsoft/coral-control-plane-seed/tree/main/schemas/ApplicationDeployment.yaml)
 
+An application needs to be assigned to a specific workspace. A folder with the same name as the workspace must exist inside the `applications` folder. As you add project-specific deployment definitions to this repository feel free to delete the placeholder `.gitkeep` files.
 
-As you add project-specific deployment definitions to this repository feel free to delete the placeholder `.gitkeep` files.
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
