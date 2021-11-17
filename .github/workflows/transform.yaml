@@ -54,10 +54,10 @@ jobs:
         token: ${{ secrets.GITOPS_PAT }}
 
     - name: Install Coral CLI
-      run: npm i -g @coraldev/cli@0.0.11
+      run: npm i -g @coraldev/cli
     
     - name: Coral - Update Assignments
-      run: coral assign ./controlplane
+      run: coral assign ./controlplane --verbose
 
     - name: Commit Assignments
       id: commit_assignments
@@ -75,10 +75,10 @@ jobs:
         echo "::set-output name=SHA::$SHA"
 
     - name: Coral - Render templates
-      run: coral render ./controlplane ./gitops
+      run: coral render ./controlplane ./gitops --verbose
 
     - name: Coral - Update GitOps repo
-      run: coral apply ./controlplane ./gitops
+      run: coral apply ./controlplane ./gitops --verbose
 
     - name: Commit GitOps changes
       working-directory: gitops
