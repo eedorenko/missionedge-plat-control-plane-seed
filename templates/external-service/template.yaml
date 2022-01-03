@@ -9,3 +9,5 @@ parameters:
     default: 1G
   replicas: {}
   fqdn: {}
+  healthEndpoint: 
+    default: /healthcheck
