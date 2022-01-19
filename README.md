@@ -71,7 +71,7 @@ To enable Azure Log Analytics:
 1. [Enable Monitoring of your AKS cluster](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters)
 2. Uncomment and add your Customer_ID (workspace_id) and Shared_Key to the Output with `name azure` in the `fluentbit/patches/values.yaml` file.
 
-**WARNING: It is not secure to put theses keys in plain text. A proposed solutions for securing keys is coming soon**
+**WARNING: It is not secure to put theses keys in plain text. A proposed solutions for securing secrets is coming soon**
 
 ## Contributing
 
