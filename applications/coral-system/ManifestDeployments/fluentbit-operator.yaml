@@ -1,0 +1,9 @@
+kind: ManifestDeployment
+metadata:
+  name: fluentbit-operator
+spec:
+  workspace: coral-system
+  manifests: fluentbit/setup
+  targets:
+    all:
+      clusters: all

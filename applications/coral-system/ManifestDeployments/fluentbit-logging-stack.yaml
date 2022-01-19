@@ -1,0 +1,9 @@
+kind: ManifestDeployment
+metadata:
+  name: fluentbit-logging-stack
+spec:
+  workspace: coral-system
+  manifests: fluentbit/logging-stack
+  targets:
+    all:
+      clusters: all

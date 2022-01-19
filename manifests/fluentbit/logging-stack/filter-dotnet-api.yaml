@@ -1,0 +1,16 @@
+apiVersion: logging.kubesphere.io/v1alpha2
+kind: Filter
+metadata:
+  name: dotnet-api
+  namespace: kubesphere-logging-system
+  labels:
+    logging.kubesphere.io/enabled: "true"
+    logging.kubesphere.io/component: logging
+spec:
+  match: "*"
+  filters:
+  - grep:
+      exclude: log /(?=.*?(HTTP GET /metrics responded 200))/
+  - grep:
+      exclude: log /(?=.*?(HTTP GET /healthcheck responded 200))/
+
