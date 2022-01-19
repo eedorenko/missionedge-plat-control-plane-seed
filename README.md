@@ -60,6 +60,19 @@ The schema for the `ApplicationDeployment.yaml` can be found in the `/schemas` d
 
 An application needs to be assigned to a specific workspace. A folder with the same name as the workspace must exist inside the `applications` folder. As you add project-specific deployment definitions to this repository feel free to delete the placeholder `.gitkeep` files.
 
+## Configure Dialtone Services
+
+### Fluent Bit
+
+Fluent bit is configured to process and output logs to a file in the path `/fluentbitoutput`. Additional inputs, outputs, filters, and parsers can be configured in `fluentbit/patches/values.yaml`. For more information on how to configure, see [Fluent Bit Docs](https://docs.fluentbit.io/manual/). 
+
+To enable Azure Log Analytics:
+
+1. [Enable Monitoring of your AKS cluster](https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-enable-existing-clusters)
+2. Uncomment and add your Customer_ID (workspace_id) and Shared_Key to the Output with `name azure` in the `fluentbit/patches/values.yaml` file.
+
+**WARNING: It is not secure to put theses keys in plain text. A proposed solutions for securing keys is coming soon**
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
