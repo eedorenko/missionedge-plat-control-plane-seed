@@ -5,8 +5,9 @@ metadata:
   namespace: fluentbit
 spec:
   values:
-    image: 
-      tag: 1.5-debug
+    # For access to the file output, image tag must be set to debug
+    # image: 
+    #   tag: 1.5-debug
     serviceMonitor: 
       enabled: true
       namespace: monitoring
@@ -40,7 +41,6 @@ spec:
         prometheus.io/path: "/api/v1/metrics/prometheus"
         prometheus.io/port: "2020"
         prometheus.io/scrape: "true" 
-
     daemonSetVolumes:
       - name: varlog
         hostPath:
@@ -55,7 +55,6 @@ spec:
       - name: fluentbitoutput
         hostPath:
           path: /fluentbitoutput    
-
     daemonSetVolumeMounts:
       - name: varlog
         mountPath: /var/log
@@ -90,19 +89,15 @@ spec:
             Skip_Long_Lines On
             Refresh_Interval  10
 
-        [INPUT]
-            Name  cpu   
-
       parser: |
         [PARSER]
-              # http://rubular.com/r/tjUt3Awgg4
-              Name cri
-              Format regex
-              Regex ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<message>.*)$
-              Time_Key    time
-              Time_Format %Y-%m-%dT%H:%M:%S.%L%z  
+            # http://rubular.com/r/tjUt3Awgg4
+            Name cri
+            Format regex
+            Regex ^(?<time>[^ ]+) (?<stream>stdout|stderr) (?<logtag>[^ ]*) (?<message>.*)$
+            Time_Key    time
+            Time_Format %Y-%m-%dT%H:%M:%S.%L%z  
 
-        ## https://docs.fluentbit.io/manual/pipeline/filters
       filters: |
         [FILTER]
             Name                kubernetes
@@ -115,17 +110,13 @@ spec:
             Merge_Log_Key       log_processed
             K8S-Logging.Parser  On
             K8S-Logging.Exclude Off
-      ## https://docs.fluentbit.io/manual/pipeline/outputs
-      
+
       outputs: |
         # [OUTPUT]
         #     Name        azure
         #     Match       *
         #     Customer_ID <your-workspace-id>
-        #     Shared_Key  <authentication-key>
-        
-        [OUTPUT]
-            Name        stdout    
+        #     Shared_Key  <authentication-key> 
 
         [OUTPUT]
             Name  file

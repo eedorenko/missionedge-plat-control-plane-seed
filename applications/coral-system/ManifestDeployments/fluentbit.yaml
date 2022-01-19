@@ -3,7 +3,7 @@ metadata:
   name: fluentbit
 spec:
   workspace: coral-system
-  manifests: fluentbit3
+  manifests: fluentbit
   targets:
     all:
       clusters: all
