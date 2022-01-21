@@ -1,7 +1,0 @@
-kind: ApplicationTemplate
-metadata:
-  name: external-service
-spec:
-  repo: https://github.com/microsoft/coral-control-plane-seed
-  ref: main
-  path: templates/external-service-v2/template.yaml
