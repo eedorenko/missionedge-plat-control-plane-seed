@@ -3,11 +3,10 @@ kind: Ingress
 metadata:
   name: {{coral.app}}-ingress
   namespace: {{coral.workspace}}-{{coral.app}}-{{coral.deployment}}
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - http:
+  - host: {{fqdn}}
+    http:
       paths:
       - path: /
         pathType: Prefix
@@ -15,4 +14,4 @@ spec:
           service:
             name: {{coral.app}}
             port:
-              number: 8000
+              number: {{port}}

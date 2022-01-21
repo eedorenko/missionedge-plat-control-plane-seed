@@ -29,3 +29,9 @@ spec:
           limits:
             cpu: {{cpu}}
             memory: {{memory}}
+        readinessProbe:
+          httpGet:
+            path: {{healthEndpoint}}
+            port: {{port}}
+          initialDelaySeconds: 10
+          periodSeconds: 10
