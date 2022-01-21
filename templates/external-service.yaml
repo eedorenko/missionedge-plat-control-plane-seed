@@ -4,4 +4,4 @@ metadata:
 spec:
   repo: https://github.com/microsoft/coral-control-plane-seed
   ref: main
-  path: templates/external-service-v2/template.yaml
+  path: templates/external-service/template.yaml
