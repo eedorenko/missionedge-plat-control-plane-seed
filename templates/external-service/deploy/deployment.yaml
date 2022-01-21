@@ -1,22 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{app}}-deployment
-  namespace: {{app}}
+  name: {{coral.app}}-deployment
+  namespace: {{coral.workspace}}-{{coral.app}}-{{coral.deployment}}
   labels:
-    app: {{app}}
+  {{#coral.labels}}
+    {{key}}: {{value}}
+  {{/coral.labels}}
 spec:
   replicas: {{replicas}}
   selector:
     matchLabels:
-      app: {{app}}
+      app: {{coral.app}}
   template:
     metadata:
       labels:
-        app: {{app}}
+        {{#coral.labels}}
+        {{key}}: {{value}}
+        {{/coral.labels}}
     spec:
       containers:
-      - name: {{app}}
+      - name: {{coral.app}}
         image: {{image}}
         imagePullPolicy: Always
         ports:
@@ -25,9 +29,3 @@ spec:
           limits:
             cpu: {{cpu}}
             memory: {{memory}}
-        readinessProbe:
-          httpGet:
-            path: {{healthEndpoint}}
-            port: {{port}}
-          initialDelaySeconds: 10
-          periodSeconds: 10

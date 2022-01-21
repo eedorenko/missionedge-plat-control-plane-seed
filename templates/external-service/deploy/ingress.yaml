@@ -1,17 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{app}}-ingress
-  namespace: {{app}}
+  name: {{coral.app}}-ingress
+  namespace: {{coral.workspace}}-{{coral.app}}-{{coral.deployment}}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: {{fqdn}}
-    http:
+  - http:
       paths:
-      - pathType: Prefix
-        path: "/"
+      - path: /
+        pathType: Prefix
         backend:
           service:
-            name: {{app}}
+            name: {{coral.app}}
             port:
-              number: {{port}}
+              number: 8000
