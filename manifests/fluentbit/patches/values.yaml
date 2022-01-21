@@ -10,12 +10,12 @@ spec:
       valueFrom:
         secretKeyRef:
           key:  customer_id
-          name: azure_monitor
+          name: azure-monitor
     - name: "AZURE_MONITOR_SHARED_KEY"
       valueFrom:
         secretKeyRef:
           key:  shared_key
-          name: azure_monitor  
+          name: azure-monitor  
     # For access to the file output, image tag must be set to debug
     # image: 
     #   tag: 1.5-debug
