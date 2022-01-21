@@ -5,6 +5,17 @@ metadata:
   namespace: fluentbit
 spec:
   values:
+    env: 
+    - name: "AZURE_MONITOR_CUSTOMER_ID"
+      valueFrom:
+        secretKeyRef:
+          key:  customer_id
+          name: azure_monitor
+    - name: "AZURE_MONITOR_SHARED_KEY"
+      valueFrom:
+        secretKeyRef:
+          key:  shared_key
+          name: azure_monitor  
     # For access to the file output, image tag must be set to debug
     # image: 
     #   tag: 1.5-debug
@@ -115,8 +126,8 @@ spec:
         # [OUTPUT]
         #     Name        azure
         #     Match       *
-        #     Customer_ID <your-workspace-id>
-        #     Shared_Key  <authentication-key> 
+        #     Customer_ID ${AZURE_MONITOR_CUSTOMER_ID}
+        #     Shared_Key  ${AZURE_MONITOR_SHARED_KEY}
 
         [OUTPUT]
             Name  file
