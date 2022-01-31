@@ -33,7 +33,7 @@ A run is triggered after each commit into the repository, so you will see the ch
 
 ### Register Cluster(s)
 
-Add a cluster definition under the `/clusters` directory. You can find the schema for a cluster definition in the `/schemas` directory [here](https://github.com/microsoft/coral-control-plane-seed/tree/main/schemas/Cluster.yaml). 
+Add a cluster definition under the `/clusters` directory. You can find a sample cluster definition in the `/samples` directory [here](https://github.com/microsoft/coral-control-plane-seed/tree/main/samples/Cluster.yaml). 
 
 It's important to note that the values under `labels` are free-form text and not enforced. It is used to help match application assignments but is not validated for any type of ground-truth accuracy.
 
@@ -45,7 +45,7 @@ For example, for a cluster named `cluster-314`, Flux on that cluster would point
 
 A workspace is a collection of one or more applications. The concept of workspace enables filtering and configuring access to only a specific group of applications.
 
-Add a `Workspace` file inside the workspaces folder. The template for the `Workspace.yaml` can be found in the `/schemas` directory [here](https://github.com/microsoft/coral-control-plane-seed/tree/main/schemas/Workspace.yaml).
+Add a `Workspace` file under the `/workspaces` directory. A sample workspace definition can be found in the `/samples` directory [here](https://github.com/microsoft/coral-control-plane-seed/tree/main/samples/Workspace.yaml).
 
 ### Register Application(s)
 
@@ -56,7 +56,7 @@ Add an `ApplicationDeployment` file that points to the application's `app.yaml` 
 .Net Application Seed | https://github.com/microsoft/coral-template-dotnet
 Java Application Seed | https://github.com/microsoft/coral-template-java
 
-The schema for the `ApplicationDeployment.yaml` can be found in the `/schemas` directory [here](https://github.com/microsoft/coral-control-plane-seed/tree/main/schemas/ApplicationDeployment.yaml)
+A sample `ApplicationDeployment` definition can be found in the `/samples` directory [here](https://github.com/microsoft/coral-control-plane-seed/tree/main/samples/ApplicationDeployment.yaml)
 
 An application needs to be assigned to a specific workspace. A folder with the same name as the workspace must exist inside the `applications` folder. As you add project-specific deployment definitions to this repository feel free to delete the placeholder `.gitkeep` files.
 
