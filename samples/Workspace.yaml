@@ -1,4 +1,0 @@
-kind: Workspace
-metadata:
-  # Name of the workspace. Must be globally unique.
-  name: workspace1
