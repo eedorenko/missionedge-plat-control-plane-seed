@@ -1,0 +1,13 @@
+kind: ApplicationRegistration
+metadata:
+  # Name of the application. Must be unique within a workspace.
+  name: appv2test
+spec:
+  # Name of the workspace to which the application belongs
+  workspace: noel1
+
+  # The Git repository, ref (branch, tag, or commit sha), and relative path used to access the application's app.yaml
+  app:
+    repo: https://github.com/myuser/myapp
+    ref: main
+    path: app.yaml

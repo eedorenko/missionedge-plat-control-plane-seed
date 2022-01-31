@@ -1,27 +1,44 @@
 kind: ApplicationDeployment
 metadata:
-  name: <app-name> # REQUIRED: unique name of application
+  # Name of the application. Must be unique within a workspace.
+  name: myapp
 spec:
-  workspace: <workspace-name> # REQUIRED: assigned workspace
+  # Name of the workspace to which the application belongs
+  workspace: workspace1
+
+  # The Git repository, ref (branch, tag, or commit sha), and relative path used to access the application's app.yaml
   app:
-    repo: <repo-URL>  # REQUIRED: The url to a Git repository where the Application (app.yaml) is located
-    ref: <git-reference>  # REQUIRED: The Git ref (branch/tag/commit) to use
-    path: <app-yaml-path>  # REQUIRED: The path within the repo to the Application (app.yaml) file
+    repo: https://github.com/myuser/myapp
+    ref: main
+    path: app.yaml
+
+  # Targets describe how and where an application should be deployed
   targets:
-    <target-name>: # REQUIRED: target name, examples: dev, prod, staging-westus, prod-southcentralus, etc.
-      app:  # we can override values from the main spec for an specific target
-        repo: <repo-URL>
-        ref: <git-reference>
-        path: <app-yaml-path>
-      clusters: <number-of-clusters-needed> # REQUIRED: The number of clusters to deploy to, or 'all' for all clusters that match the selector
+    # Target keys are arbitrary names used for organization and must be unique within an ApplicationDeployment
+    us-dev:
+      # Only clusters with labels/environments that match the defined selector will be eligible for assignment
+      # If selector is empty or not present, the deployment is eligible for assignment to any cluster
       selector:
-        # Create assignments on clusters with label keys and values matching this selector. 
-        # If empty or not present, the deployment is assumed to target any registered Cluster
-        environment: <environment>
-        geo: <geo>
-      values: 
-        # Template values to be set during deployment.
-        # Map of string keys and values that can be used to override template defaults and app values
-        replicas: <number-of-replicas> # Examples of possible values
-        memory: <amount-of-memory>
-    
+        cloud: azure
+        geo: us
+        environment: dev
+
+      # The number of clusters to deploy to, or the string 'all' to deploy to all that match the selector
+      clusters: 1
+
+    # Example of a second deployment with an alternate set of values
+    us-staging:
+      selector:
+        cloud: azure
+        geo: us
+        environment: staging
+      clusters: 1
+
+      # (Optional) The reference to app.yaml can be set on a per-target basis
+      app:
+        path: app.staging.yaml
+
+      # (Optional) The Platform Team can also override app.yaml values with the values here
+      values:
+        replicas: 1
+        memory: 512M

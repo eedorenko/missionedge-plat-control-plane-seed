@@ -1,0 +1,11 @@
+kind: ApplicationTemplate
+metadata:
+  # Name of the workspace. Must be globally unique.
+  name: external-service
+
+# The Git repository, ref (branch, tag, or commit sha), and relative path used to access the template yaml definition
+# Note: the reference can either point to an external repo or the control plane itself to keep everything self-contained
+spec:
+  repo: https://github.com/myuser/mycontrolplane
+  ref: main
+  path: templates/my-template/template.yaml

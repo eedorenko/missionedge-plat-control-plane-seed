@@ -1,3 +1,4 @@
 kind: Workspace
 metadata:
-  name: <workspace-name> # REQUIRED: unique name of the workspace
+  # Name of the workspace. Must be globally unique.
+  name: workspace1
