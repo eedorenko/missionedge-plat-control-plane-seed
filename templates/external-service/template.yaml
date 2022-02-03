@@ -6,6 +6,8 @@ parameters:
   fqdn: {}
   healthEndpoint: 
     default: /healthcheck
+  metricsEndpoint: 
+    default: /metrics
   memory:
     default: 1G
   port: {}

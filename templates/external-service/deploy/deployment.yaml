@@ -18,6 +18,10 @@ spec:
         {{#coral.labels}}
         {{key}}: {{value}}
         {{/coral.labels}}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: {{metricsEndpoint}}
+        prometheus.io/port: "{{port}}"       
     spec:
       containers:
       - name: {{coral.app}}
