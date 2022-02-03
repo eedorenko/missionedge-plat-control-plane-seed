@@ -57,6 +57,13 @@ clusterlogs_CL
 
 When Azure Log Analytics are enabled, a Telegraf deployment, namespace, configMap and Fluent Bit service will be deployed to the clusters specified in `applications/coral-system/ManifestDeployments/fluentbit.yaml`. Telegraf is configured to collect all Prometheus metrics and output them to Fluent Bit. Fluent Bit recieves the metrics and outputs them to Log Analytics.
 
+To enable Azure Log Analytics logging for coral commands:
+
+1. Either [create a new Azure Log Analytics workspace](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/quick-create-workspace) or use the existing one created previously 
+2. Take the `workspace_id` and `key` values and add them as GitHub Actions secrets with the names `AZURE_LOG_ANALYTICS_KEY` and `AZURE_LOG_ANALYTICS_WORKSPACE_ID`
+3. The transform.yaml workflow will now send structured logs to your Azure Log Analytics workspace
+4. Your coral logs will appear in your Log Analytics workspace under the custom logs: `coral_CL`
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
