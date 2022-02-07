@@ -16,8 +16,10 @@ concurrency: transform
 env:
   # TODO: Replace this with your own repository
   GITOPS_REPO: <owner>/<repository>
+  CORAL_LOG_FILE: coral.log
   AZURE_LOG_ANALYTICS_KEY: ${{ secrets.AZURE_LOG_ANALYTICS_KEY }}
   AZURE_LOG_ANALYTICS_WORKSPACE_ID: ${{ secrets.AZURE_LOG_ANALYTICS_WORKSPACE_ID }}
+
 jobs:
   transform:
     runs-on: ubuntu-latest
@@ -91,3 +93,10 @@ jobs:
         else
           echo "No changes made to cluster gitops repo"
         fi
+
+    - name: Archive log file
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: coral-log-file
+        path: ${{ env.CORAL_LOG_FILE }}
