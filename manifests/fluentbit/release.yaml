@@ -14,6 +14,17 @@ spec:
         name: fluent
         namespace: fluentbit
   values:
+    env: 
+      - name: "LOG_ANALYTICS_WORKSPACE_ID"
+        valueFrom:
+          secretKeyRef:
+            key:  workspace_id
+            name: azure-log-analytics
+      - name: "LOG_ANALYTICS_KEY"
+        valueFrom:
+          secretKeyRef:
+            key:  key
+            name: azure-log-analytics    
     service:
       type: ClusterIP
       port: 2020
@@ -57,13 +68,19 @@ spec:
 
       inputs: |
         [INPUT]
+            Name        tcp
+            Tag         prometheus
+            Listen      0.0.0.0
+            Port        5170
+
+        [INPUT]
             Name tail
             Path /var/log/containers/*.log
             parser cri
             Tag kube.*
             Mem_Buf_Limit 5MB
             Skip_Long_Lines On
-            Refresh_Interval  10
+            Refresh_Interval  10    
 
       parser: |
         [PARSER]
@@ -128,5 +145,20 @@ spec:
             Match         prometheus
             Operation     lift
             Nested_under  tags  
+
       outputs: |
-        # placeholder: Fluent Bit will add a default elastic search output if an output field is not set
+        [OUTPUT]
+            Name            azure
+            Match           kube.*
+            Log_Type        clusterlogs
+            Customer_ID     ${LOG_ANALYTICS_WORKSPACE_ID}
+            Shared_Key      ${LOG_ANALYTICS_KEY}
+            time_generated  true
+
+        [OUTPUT]
+            Name            azure
+            Match           prometheus
+            Log_Type        clustermetrics
+            Customer_ID     ${LOG_ANALYTICS_WORKSPACE_ID}
+            Shared_Key      ${LOG_ANALYTICS_KEY}
+            time_generated  true 

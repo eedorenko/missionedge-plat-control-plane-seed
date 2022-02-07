@@ -5,4 +5,5 @@ resources:
   - repository.yaml
   - release.yaml
   - secret.yaml
-  # - telegraf.yaml
+  - service.yaml
+  - telegraf.yaml
