@@ -1,11 +1,15 @@
-# External Service Template - Documentation
+# External Service
+
+This template exposes a minimal set of parameters needed for App Teams to deploy an externally available web application.
+
+## Configuration
+
+Applications will be deployed with host-based routing that includes the workspace, application name, and deployment name. Ex: `dev.myapp.workspaceA.example.com`
+
+The default domain suffix is `example.com` and can be changed by modifying [`template.yaml`](./template.yaml)
 
 ## Values
 
-- cpu - The number of cores requested for each replica.
-- fqdn - The fully qualified domain name by which the application can be accessed.
-- healthEndpoint - The route to healthcheck endpoint.
 - image - The image specification including tag of the container image to use.
-- memory - The amount of memory requested for each replica.
 - port - The port on the container where the app can be accessed
-- replicas - The number of replicas to create in the replica set.
+- domainSuffix (optional): top level domain that will be used for Ingress resources

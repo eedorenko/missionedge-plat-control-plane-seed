@@ -5,7 +5,7 @@ metadata:
   namespace: {{coral.workspace}}-{{coral.app}}-{{coral.deployment}}
 spec:
   rules:
-  - host: {{coral.deployment}}.{{coral.app}}.{{coral.workspace}}.{{domainSuffix}}
+  - host: {{fqdn}}
     http:
       paths:
       - path: /

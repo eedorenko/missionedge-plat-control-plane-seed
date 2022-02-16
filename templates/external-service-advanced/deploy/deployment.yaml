@@ -8,7 +8,7 @@ metadata:
     {{key}}: {{value}}
   {{/coral.labels}}
 spec:
-  replicas: 1
+  replicas: {{replicas}}
   selector:
     matchLabels:
       app: {{coral.app}}
@@ -20,7 +20,7 @@ spec:
         {{/coral.labels}}
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/path: /metrics
+        prometheus.io/path: {{metricsEndpoint}}
         prometheus.io/port: "{{port}}"       
     spec:
       containers:
@@ -31,11 +31,11 @@ spec:
         - containerPort: {{port}}
         resources:
           limits:
-            cpu: 1
-            memory: 1G
+            cpu: {{cpu}}
+            memory: {{memory}}
         readinessProbe:
           httpGet:
-            path: /healthcheck
+            path: {{healthEndpoint}}
             port: {{port}}
           initialDelaySeconds: 10
           periodSeconds: 10
