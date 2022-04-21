@@ -1,9 +1,9 @@
 kind: ManifestDeployment
 metadata:
-  name: prometheus
+  name: big-bang
 spec:
   workspace: coral-system
-  manifests: prometheus
+  manifests: big-bang
   targets:
     all:
       clusters: all
