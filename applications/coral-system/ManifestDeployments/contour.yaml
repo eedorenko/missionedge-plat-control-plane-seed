@@ -1,9 +1,0 @@
-kind: ManifestDeployment
-metadata:
-  name: contour
-spec:
-  workspace: coral-system
-  manifests: contour
-  targets:
-    all:
-      clusters: all
