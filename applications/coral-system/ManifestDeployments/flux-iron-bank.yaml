@@ -1,0 +1,9 @@
+kind: ManifestDeployment
+metadata:
+  name: flux-iron-bank
+spec:
+  workspace: coral-system
+  manifests: flux-iron-bank
+  targets:
+    all:
+      clusters: all
