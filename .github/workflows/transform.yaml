@@ -83,6 +83,9 @@ jobs:
     - name: Coral - Update GitOps repo
       run: coral apply ./controlplane ./gitops --verbose
 
+    - name: Zarf-compose - Create package descriptors (zarf.yaml) files for clusters
+      run: ./controlplane/utils/zarf-compose.sh ./gitops -a
+
     - name: Commit GitOps changes
       working-directory: gitops
       run: |
