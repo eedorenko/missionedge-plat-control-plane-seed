@@ -1,0 +1,9 @@
+kind: ApplicationRegistration
+metadata:
+  name: rancher-hello-world
+spec:
+  workspace: kaizen
+  app:
+    repo: https://github.com/vyta/rancher-hello-world
+    ref: main
+    path: app.yaml

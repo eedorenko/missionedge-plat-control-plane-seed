@@ -1,0 +1,12 @@
+kind: ZarfPackageConfig
+metadata:
+  name: {{coral.app}}
+components:
+  - name: {{coral.app}}
+    required: true
+    manifests:
+      - name: {{coral.app}}
+        kustomizations:
+          - .
+    images:
+      - {{image}}

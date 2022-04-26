@@ -1,0 +1,7 @@
+kind: ApplicationTemplate
+metadata:
+  name: istio-service
+spec:
+  repo: https://github.com/vyta/bigbang-control-plane
+  ref: main
+  path: templates/istio-service/template.yaml

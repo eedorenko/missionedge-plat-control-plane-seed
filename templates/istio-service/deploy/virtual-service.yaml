@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{coral.app}}
+  namespace: {{coral.workspace}}-{{coral.app}}-{{coral.deployment}}
+  labels:
+    app.kubernetes.io/component: {{coral.app}}
+spec:
+  gateways:
+    - istio-system/main
+  hosts:
+    - {{coral.deployment}}.{{coral.app}}.{{coral.workspace}}.bigbang.dev
+  http:
+    - route:
+      - destination:
+          port:
+            number: 80
+          host: {{coral.app}}.{{coral.workspace}}-{{coral.app}}-{{coral.deployment}}.svc.cluster.local
