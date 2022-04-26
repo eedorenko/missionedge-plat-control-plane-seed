@@ -13,7 +13,7 @@ components:
     manifests:
       - name: big-bang-config
         kustomizations:
-          - "kustomization"
+          - .
     repos:
       - https://repo1.dso.mil/platform-one/big-bang/bigbang.git@1.28.0
       - https://repo1.dso.mil/platform-one/big-bang/apps/core/istio-controlplane.git@1.11.5-bb.2

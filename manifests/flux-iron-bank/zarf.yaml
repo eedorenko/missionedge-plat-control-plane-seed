@@ -5,7 +5,7 @@ metadata:
   architecture: amd64
 
 components:
-  - name: flux
+  - name: flux-iron-bank
     required: true
     secretName: "private-registry"
     manifests:

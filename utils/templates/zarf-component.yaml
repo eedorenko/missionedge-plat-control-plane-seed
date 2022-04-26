@@ -1,0 +1,6 @@
+
+- name: {COMPONENT_NAME}
+  required: true
+  import:
+    path: {COMPONENT_PATH}
+
