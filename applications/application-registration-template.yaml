@@ -1,0 +1,10 @@
+kind: ApplicationRegistration
+metadata:
+  name: {name}
+spec: 
+  workspace: coral-applications
+  app: 
+    repo: {repo}
+    ref: {ref}
+    path: {path}
+    
