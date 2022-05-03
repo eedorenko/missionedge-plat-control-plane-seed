@@ -1,0 +1,8 @@
+kind: Target
+metadata:
+  name: null-target
+spec:
+  workspace: coral-applications
+  selector:
+    environment: dev
+    type: none
