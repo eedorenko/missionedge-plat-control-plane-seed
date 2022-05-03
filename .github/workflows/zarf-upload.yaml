@@ -4,13 +4,14 @@
 # * Update env.GIT_OPS_OWNER with the Owner for the Cluster GitOps Repo
 # * Update env.STORAGE_ACCOUNT_RESOURCE_GROUP with the Resource Group with existing Storage Account
 # * Update env.STORAGE_ACCOUNT_NAME with the Storage Account name
+# * Update env.CONTAINER_REGISTRY with the container registry url
 # * Create the following GitHub Actions secrets:
 #   * Name: GITOPS_PAT
 #   * Value: A Personal Access Token with the `repo` scope 
-#   * Name: IRONBANK_USERNAME
-#   * Value: Username for Iron Bank registry
-#   * Name: IRONBANK_CLI_SECRET
-#   * Value: Cli secret for Iron Bank registry
+#   * Name: CONTAINER_REGISTRY_USERNAME
+#   * Value: Username for Container registry
+#   * Name: CONTAINER_REGISTRY_SECRET
+#   * Value: Secret for Container registry
 ########
 
 on:
@@ -34,13 +35,14 @@ concurrency: upload
 
 env:
   # TODO: Replace values below
+  GIT_OPS_OWNER: <Git ops repo owner>
   GIT_OPS_REPO: <Git ops repo name>
-  GIT_OPS_OWNER: <owner>
   STORAGE_ACCOUNT_RESOURCE_GROUP: <Replace with Azure Resource Group name with existing Storage Account>
   STORAGE_ACCOUNT_NAME: <Replace with Azure storage account name>
+  CONTAINER_REGISTRY: <Replace with Container Registry url>
   GITHUB_TOKEN: ${{ secrets.GITOPS_PAT }}  
-  IRONBANK_USERNAME: ${{ secrets.IRONBANK_USERNAME }}  
-  IRONBANK_CLI_SECRET: ${{ secrets.IRONBANK_CLI_SECRET }}  
+  CONTAINER_REGISTRY_USERNAME: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}  
+  CONTAINER_REGISTRY_SECRET: ${{ secrets.CONTAINER_REGISTRY_SECRET }}  
 
 jobs:
   upload:
