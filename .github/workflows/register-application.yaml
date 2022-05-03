@@ -1,0 +1,151 @@
+name: Register New Application
+########
+# Usage:
+# * Create a GitHub Actions secret for the app to trigger the transform workflow:
+#   * Name: CP_REPO_RENDER_TOKEN
+#   * Value: A Personal Access Token with the `repo` scope
+########
+
+on:
+  workflow_dispatch:
+    inputs:
+      orgName:
+        description: 'Organization or GitHub user name of the application repo'     
+        required: true 
+        type: string
+      appRepo:
+        description: 'Bare name of the application repo'
+        required: true 
+        type: string
+      ref:
+        description: 'Reference of the control plane workflow version to be invoked'
+        required: true
+        type: string
+        default: 'main'        
+      appRepoToken:
+        description: 'App repo GitHub PAT with "repo" scope (to allow this workflow to configure the application repo)'     
+        required: true 
+        type: string
+      appName:
+        description: 'Name of the application to be registered'
+        required: true
+        type: string
+      appBranch:
+        description: 'Branch of the application to be registered'
+        required: true
+        type: string
+        default: main
+      appYamlPath:
+        description: 'Path to the application YAML file'
+        required: true
+        type: string
+        default: app.yaml
+
+env:
+  # TODO: Replace this with your own repository
+  GITOPS_REPO: MS-Santi/samplego
+  CORAL_LOG_FILE: coral.log
+  AZURE_LOG_ANALYTICS_KEY: ${{ secrets.AZURE_LOG_ANALYTICS_KEY }}
+  AZURE_LOG_ANALYTICS_WORKSPACE_ID: ${{ secrets.AZURE_LOG_ANALYTICS_WORKSPACE_ID }}
+
+  ORG: ${{ github.event.inputs.orgName }}
+  APP_REPO: ${{ github.event.inputs.appRepo }}        
+  APP_REPO_TOKEN: ${{ github.event.inputs.appRepoToken }}
+  APP_NAME: ${{ github.event.inputs.appName }}
+  APP_BRANCH: ${{ github.event.inputs.appBranch }}
+  APP_YAML_PATH: ${{ github.event.inputs.appYamlPath }}
+  CP_REPO_RENDER_TOKEN: ${{ secrets.CP_REPO_RENDER_TOKEN }}
+  CP_REPO: ${{ github.repository }}
+  CP_REF: ${{ github.event.inputs.ref }}
+  CP_RUNNING_REF: ${{ github.ref }}
+
+jobs:
+
+  Configure-Control-Plane-For-App:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Secrets in Application Repo
+        run: |
+          #Use parameters in variable GH_REPO for implicit repo configuration in gh
+          export GH_REPO=$ORG/$APP_REPO
+          echo "Running from: $CP_REPO - $CP_RUNNING_REF"
+          echo "Acting on: $GH_REPO"
+          echo "\nConfiguring App Repo to trigger App Deployment workflow on: $CP_REPO - $CP_REF:"
+          
+          #Use App repo token as credentials to create secrets in App repo
+          echo "--Configuring App Repo's control plane repo"
+          GITHUB_TOKEN=$APP_REPO_TOKEN gh secret set CP_REPO --body "$CP_REPO"
+          echo "--Configuring App Repo's control plane repo's ref"
+          GITHUB_TOKEN=$APP_REPO_TOKEN gh secret set CP_REF --body "$CP_REF"
+          echo "--Configuring App Repo's control plane repo's token"
+          GITHUB_TOKEN=$APP_REPO_TOKEN gh secret set CP_REPO_TOKEN --body "$CP_REPO_RENDER_TOKEN"
+
+  Register-App:
+    runs-on: ubuntu-latest
+    needs: Configure-Control-Plane-For-App
+    steps:
+    - name: Configure Git
+      run: |
+        git config --global user.name github-actions
+        git config --global user.email github-actions@github.com
+        git config --global credential.helper store
+        mkdir -p ~/.config/git
+        echo "https://git:${{ secrets.GITOPS_PAT }}@github.com/" > ~/.config/git/credentials
+
+    - name: Clone Control Plane Repo
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ github.repository }}
+        path: 'controlplane'
+        token: ${{ secrets.GITOPS_PAT }}
+    
+    - name: Register new application in control plane
+      id: write_app_registration
+      working-directory: controlplane
+      run: |
+        REGISTRATION_FILE="./applications/coral-applications/ApplicationRegistrations/$APP_NAME.yaml"
+        echo "New registration file: $REGISTRATION_FILE"
+        APP_URL="https:\/\/github.com\/$ORG\/$APP_REPO"
+
+        cp ./applications/application-registration-template.yaml $REGISTRATION_FILE
+
+        sed -i "s/{name}/$APP_NAME/" $REGISTRATION_FILE
+        sed -i "s/{repo}/$APP_URL/" $REGISTRATION_FILE
+        sed -i "s/{ref}/$APP_BRANCH/" $REGISTRATION_FILE
+        sed -i "s/{path}/$APP_YAML_PATH/" $REGISTRATION_FILE
+
+        echo "Registration Contents:"
+        cat $REGISTRATION_FILE
+
+    - name: Commit New Application
+      id: commit_registration
+      working-directory: controlplane
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then 
+          git add .
+          git commit -m "Register new application"
+          git push origin
+        else
+          echo "No new registration"
+        fi
+
+        SHA=$(git rev-parse HEAD)
+        echo "::set-output name=SHA::$SHA"
+
+    - name: Archive log file
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: coral-log-file
+        path: ${{ env.CORAL_LOG_FILE }}
+
+
+  Trigger-Transform:
+    runs-on: ubuntu-latest
+    needs: [Register-App, Configure-Control-Plane-For-App]
+    steps:    
+      - name: Trigger the transform workflow
+        run: |
+          echo "Triggering transform workflow: $CP_REPO - $CP_REF"
+          export GH_REPO=$CP_REPO
+          GITHUB_TOKEN=$CP_REPO_RENDER_TOKEN gh workflow run transform.yaml --ref $CP_REF
