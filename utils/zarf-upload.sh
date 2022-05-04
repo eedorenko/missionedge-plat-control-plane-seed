@@ -6,7 +6,7 @@ show_usage() {
   echo "$0 [--gitops-owner <gitops_owner>] [--gitops-repo <gitops_repo>] \\"
   echo " [--storage-account-rg <storage_account_rg>] [--storage-account-name <storage_account_name>] \\"
   echo " [--clusters <clusters>] [--tar-version <tar_version>] [--version-overwrite <true/false>] \\"
-  echo " [--iron-bank-username <iron_bank_username>] [--iron-bank-cli-secret <iron_bank_cli_secret>]"
+  echo " [--container-registry <container_registry>] [--container-registry-username <container_registry_username>] [--container-registry-secret <container_registry_secret>]"
   echo ' '
   echo ' Pre-requisites '
   echo '  - Make sure you are logged in to az cli and subscription is set to where storage account lives.'
@@ -14,25 +14,27 @@ show_usage() {
   echo ' '
   echo ' Arguments '
   echo ' '
-  echo ' --gitops-owner        : Git Ops Repository Owner'
-  echo '                          Required'
-  echo ' --gitops-repo         : Git Ops Repository'
-  echo '                          Required'
-  echo ' --storage-account-rg   : Resource Group for the Storage Account'
-  echo '                          Required'
-  echo ' --storage-account-name : Existing Storage Account to deploy to'
-  echo '                          Required'
-  echo ' --clusters             : Comma separated clusters. If set to "all", it will package and upload for all clusters'
-  echo '                          Required'
-  echo ' --tar-version          : Version of the packaged tar. This also creates a directory in Storage Account'
-  echo '                          Required'
-  echo ' --version-overwrite    : Flag for overriding the version. If "false", script will fail when uploading an existing version'
-  echo '                          Optional'
-  echo '                          Default: false'
-  echo ' --iron-bank-username   : User name for the Iron Bank repository'
-  echo '                          Required'
-  echo ' --iron-bank-cli-secret : CLI Secret associated with the user name'
-  echo '                          Required'
+  echo ' --gitops-owner                 : Git Ops Repository Owner'
+  echo '                                  Required'
+  echo ' --gitops-repo                  : Git Ops Repository'
+  echo '                                  Required'
+  echo ' --storage-account-rg           : Resource Group for the Storage Account'
+  echo '                                  Required'
+  echo ' --storage-account-name         : Existing Storage Account to deploy to'
+  echo '                                  Required'
+  echo ' --clusters                     : Comma separated clusters. If set to "all", it will package and upload for all clusters'
+  echo '                                  Required'
+  echo ' --tar-version                  : Version of the packaged tar. This also creates a directory in Storage Account'
+  echo '                                  Required'
+  echo ' --version-overwrite            : Flag for overriding the version. If "false", script will fail when uploading an existing version'
+  echo '                                  Optional'
+  echo '                                  Default: false'
+  echo ' --container-registry           : Container Registry URL'
+  echo '                                  Required'
+  echo ' --container-registry-username  : Username for the Container Registry'
+  echo '                                  Required'
+  echo ' --container-registry-secret    : Secret or Password associated with Container Registry'
+  echo '                                  Required'
 }
 
 VERSION_OVERWRITE="false"
@@ -70,12 +72,16 @@ while (( $# )); do
       VERSION_OVERWRITE=$2
       shift 2
       ;;  
-    --iron-bank-username)
-      IRONBANK_USERNAME=$2
+    --container-registry)
+      CONTAINER_REGISTRY=$2
+      shift 2
+      ;;
+    --container-registry-username)
+      CONTAINER_REGISTRY_USERNAME=$2
       shift 2
       ;;  
-    --iron-bank-cli-secret)
-      IRONBANK_CLI_SECRET=$2
+    --container-registry-secret)
+      CONTAINER_REGISTRY_SECRET=$2
       shift 2
       ;;  
     --)
@@ -118,10 +124,9 @@ upload_to_storage_account () {
     rm ${zarf_tar_file_path}
 }
 
-login_iron_bank () {
-    local ironbank_registry="registry1.dso.mil"  
-    echo "Logging in to Iron Bank Registry ${ironbank_registry} ..."
-    zarf tools registry login ${ironbank_registry} -u ${IRONBANK_USERNAME} -p ${IRONBANK_CLI_SECRET}
+login_container_registry () {
+    echo "Logging in to Container Registry ${CONTAINER_REGISTRY} ..."
+    zarf tools registry login ${CONTAINER_REGISTRY} -u ${CONTAINER_REGISTRY_USERNAME} -p ${CONTAINER_REGISTRY_SECRET}
 }
 
 create_blob_container () {
@@ -147,6 +152,18 @@ check_if_zarf_exists () {
     else
         echo "Zarf file does not exist for ${cluster}."
         exit 1
+    fi
+}
+
+package_zarf () {
+    echo "Packaging Zarf..."
+    local exit_code=0
+    zarf package create --confirm &> /dev/null || exit_code=$?
+    if [ ${exit_code} -eq 0 ]; then
+      echo "Done packagin Zarf."
+    else
+      echo "Error in packaging Zarf. Please ensure Container Registry Credentials are correct."
+      exit 1
     fi
 }
 
@@ -179,7 +196,7 @@ clean_up () {
 } 
 
 clone_gitops_repo
-login_iron_bank
+login_container_registry
 set_storage_account_connection_string
 create_blob_container
 package_and_upload
