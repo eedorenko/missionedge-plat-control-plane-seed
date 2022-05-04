@@ -1,8 +1,8 @@
 kind: Target
 metadata:
-  name: null-target
+  name: void
 spec:
   workspace: coral-applications
   selector:
     environment: dev
-    type: none
+    type: void
