@@ -18,28 +18,28 @@ To register and subsequently trigger application deployment requests, create a P
 
 ### Registration
 
+To register the application, the platform team will go to the control plane repo in GitHub and locate the `Register New Application workflow`. Using the `Run Workflow` option, they will enter the required parameters and trigger the workflow:
+
+![Triggering the "Register New Application" workflow](media/app-registration-ui.jpg)
+
+Although parameters are self-explanatory, here is some more information about them:
+
+|Parameter|Comments|
+|-|-|
+|Use workflow from|This specifies which version of the workflow to run in this specific workflow run|
+|Organization or Github user name of the application repo|If the application repo is at https://github.com/a-name/a-repo-name, this value would be `a-name`|
+|Bare name of the application repo|If the application repo is at https://github.com/a-name/a-repo-name, this value would be `a-repo-name`|
+|Reference of the control plane workflow version to be invoked|This specifies which version of the workflow be configured to run in the application repo|
+|App repo GitHub PAT with "repo" scope (to allow this workflow to write back in the application repo)|This token with access to the application repo is required because this workflow needs to write to that repo to configure it. It is used for one run only and it is not stored. It can have a very short expiration time.|
+|Name of the application to be registered|Name of the application as it will appear in the Coral platform. Simple identifier without special characters.|
+|Branch of the application to be registered|This is the branch of the application that will contain the yaml file to be deployed.|
+|Path to the application YAML file|The name of the yaml file where the application metadata for Coral is stored. Most documentation calls it app.yaml so only change it when absolutely needed.|
+
 Registering an application using the application registration workflow accomplishes three things:
 
 1. Updates this control plane repo with metadata of the application that is being registered
 
-    To register the application, the platform team will go to the control plane repo in GitHub and locate the `Register New Application workflow`. Using the `Run Workflow` option, they will enter the required parameters and trigger the workflow:
-
-    ![Triggering the "Register New Application" workflow](media/app-registration-ui.jpg)
-
-    Although parameters are self-explanatory, here is some more information about them:
-
-    |Parameter|Comments|
-    |-|-|
-    |Use workflow from|This specifies which version of the workflow to run in this specific workflow run|
-    |Organization or Github user name of the application repo|If the application repo is at https://github.com/a-name/a-repo-name, this value would be `a-name`|
-    |Bare name of the application repo|If the application repo is at https://github.com/a-name/a-repo-name, this value would be `a-repo-name`|
-    |Reference of the control plane workflow version to be invoked|This specifies which version of the workflow be configured to run in the application repo|
-    |App repo GitHub PAT with "repo" scope (to allow this workflow to write back in the application repo)|This token with access to the application repo is required because this workflow needs to write to that repo to configure it. It is used for one run only and it is not stored. It can have a very short expiration time.|
-    |Name of the application to be registered|Name of the application as it will appear in the Coral platform. Simple identifier without special characters.|
-    |Branch of the application to be registered|This is the branch of the application that will contain the yaml file to be deployed.|
-    |Path to the application YAML file|The name of the yaml file where the application metadata for Coral is stored. Most documentation calls it app.yaml so only change it when absolutely needed.|
-
-    The first step in the workflow is to register the application. For that, it will create a reference in the default `coral-applications` workspace. Note that if other workspaces are required, the workflow needs to be adjusted properly, since it only considers the default workspace.
+    This first step will create a reference in the default `coral-applications` workspace. Note that if other workspaces are required, the workflow needs to be adjusted properly, since it only considers the default workspace.
   
 1. Updates the application's repo to configure the required information about this control repo for when an deployment request is needed.
 
