@@ -35,3 +35,8 @@ Every time you trigger this workflow, the Coral transform.yaml workflow will be 
 ## Other ways to trigger the workflow
 
 The workflow above is configured with a `workflow_dispatch` event. In other words, it can only be triggered manually. You can tailor the workflow to your needs by changing the events that trigger it. You can refer to the [documentation in github](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows) for information on events that can trigger this workflow.
+
+## See Also
+
+* [Introduction](../README.md)
+* [Registering an application with the Coral platform](application-registration.md)

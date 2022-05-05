@@ -54,3 +54,8 @@ Registering an application using the application registration workflow accomplis
 1. Triggers an initial deployment request for the application
 
    Using the token stored in the `CP_REPO_RENDER_TOKEN` secret, it triggers the `Process Platform Change Requests` (transform.yaml) workflow, so that Coral processes the new registration.
+
+## See Also
+
+* [Introduction](../README.md)
+* [Triggering a deployment](application-refresh.md)
