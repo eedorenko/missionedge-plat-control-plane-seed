@@ -5,8 +5,8 @@ show_usage() {
   echo -e 'Usage:'
   echo "$0 [--gitops-owner <gitops_owner>] [--gitops-repo <gitops_repo>] \\"
   echo " [--storage-account-rg <storage_account_rg>] [--storage-account-name <storage_account_name>] \\"
-  echo " [--clusters <clusters>] [--tar-version <tar_version>] [--version-overwrite <true/false>] \\"
-  echo " [--container-registry <container_registry>] [--container-registry-username <container_registry_username>] [--container-registry-secret <container_registry_secret>]"
+  echo " [--clusters <clusters>] [--container-registry <container_registry>] \\"
+  echo " [--container-registry-username <container_registry_username>] [--container-registry-secret <container_registry_secret>]"
   echo ' '
   echo ' Pre-requisites '
   echo '  - Make sure you are logged in to az cli and subscription is set to where storage account lives.'
@@ -24,11 +24,6 @@ show_usage() {
   echo '                                  Required'
   echo ' --clusters                     : Comma separated clusters. If set to "all", it will package and upload for all clusters'
   echo '                                  Required'
-  echo ' --tar-version                  : Version of the packaged tar. This also creates a directory in Storage Account'
-  echo '                                  Required'
-  echo ' --version-overwrite            : Flag for overriding the version. If "false", script will fail when uploading an existing version'
-  echo '                                  Optional'
-  echo '                                  Default: false'
   echo ' --container-registry           : Container Registry URL'
   echo '                                  Required'
   echo ' --container-registry-username  : Username for the Container Registry'
@@ -37,7 +32,6 @@ show_usage() {
   echo '                                  Required'
 }
 
-VERSION_OVERWRITE="false"
 while (( $# )); do
   case "$1" in
     -h|--help)
@@ -64,14 +58,6 @@ while (( $# )); do
       CLUSTER_NAMES=$2
       shift 2
       ;;    
-    --tar-version)
-      VERSION=$2
-      shift 2
-      ;;
-    --version-overwrite)
-      VERSION_OVERWRITE=$2
-      shift 2
-      ;;  
     --container-registry)
       CONTAINER_REGISTRY=$2
       shift 2
@@ -119,8 +105,9 @@ upload_to_storage_account () {
     local zarf_tar_file_path=$(find . -name "*.tar.zst")
     local tar_basename=$(basename ${zarf_tar_file_path})
     local storage_container_name="zarf-container"
+    local cluster=$1
     echo "Uploading Tar file ${tar_basename} to Storage Account"
-    az storage blob upload -f ${zarf_tar_file_path} -c ${storage_container_name} -n "${VERSION}/${tar_basename}" --overwrite ${VERSION_OVERWRITE}
+    az storage blob upload -f ${zarf_tar_file_path} -c ${storage_container_name} -n "${cluster}/${tar_basename}" --overwrite true
     rm ${zarf_tar_file_path}
 }
 
@@ -185,7 +172,7 @@ package_and_upload () {
         check_if_zarf_exists $cluster
         pushd $cluster > /dev/null
         package_zarf
-        upload_to_storage_account
+        upload_to_storage_account $cluster
         popd > /dev/null
     done
     popd > /dev/null

@@ -12,6 +12,9 @@
 #   * Value: Username for Container registry
 #   * Name: CONTAINER_REGISTRY_SECRET
 #   * Value: Secret for Container registry
+#   * Name: AZURE_CREDENTIALS
+#   * Value: Service principal credentials that has scope for Resource Group containing the Storage Account
+#   * For AZURE_CREDENTIALS, see https://github.com/marketplace/actions/azure-login#configure-a-service-principal-with-a-secret
 ########
 
 on:
@@ -21,15 +24,6 @@ on:
         description: 'Cluster names'
         required: true
         type: string
-      version:
-        description: 'Version'
-        required: true
-        type: string
-      version_overwrite:
-        description: 'Overwrite Version?'
-        required: true 
-        type: boolean
-        default: false
 
 concurrency: upload
 
@@ -68,4 +62,4 @@ jobs:
       run: |
         sudo ./utils/zarf-install.sh
         export PATH="$PWD:${PATH}"        
-        ./utils/zarf-upload.sh --clusters "${{ github.event.inputs.cluster_names }}" --tar-version "${{ github.event.inputs.version }}" --version-overwrite "${{ github.event.inputs.version_overwrite }}"
+        ./utils/zarf-upload.sh --clusters "${{ github.event.inputs.cluster_names }}"
