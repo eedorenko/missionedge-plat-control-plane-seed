@@ -1,6 +1,6 @@
 # Introduction
 
-This is the default control plane seed to get started with deploying applications via [Coral](https://github.com/microsoft/coral)
+This is the BigBang control plane seed to get started with deploying applications leveraging the [Coral](https://github.com/microsoft/coral) platform.
 
 ## Getting Started
 
@@ -19,25 +19,6 @@ To get started, see the [platform setup instructions](https://github.com/microso
 - `templates` - defines the available `ApplicationTemplates` in your platform ([sample](https://github.com/microsoft/coral/blob/main/docs/samples/ApplicationTemplate.yaml))
 - `workspaces` - defines the `Workspaces` in your platform ([sample](https://github.com/microsoft/coral/blob/main/docs/samples/Workspace.yaml))
 
+## BigBang seed specifics
 
-## Contributing
-
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
-## Trademarks
-
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
-trademarks or logos is subject to and must follow 
-[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
-Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
-Any use of third-party trademarks or logos are subject to those third-party's policies.
+This control plane repo seed has been customized to deploy specific BigBang services. Additionally, since this instance assumes that the neither the UI portal nor the API will be used for management of the platform, a workflow in this repo is used to [register a new application with Coral](./docs/application-registration.md), whereas a repo in each application's repo is used to [trigger an application refresh](docs/application-refresh.md).

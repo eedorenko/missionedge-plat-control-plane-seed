@@ -1,0 +1,8 @@
+kind: Target
+metadata:
+  name: void
+spec:
+  workspace: coral-applications
+  selector:
+    environment: dev
+    type: void
