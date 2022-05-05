@@ -1,8 +1,8 @@
 kind: Target
 metadata:
-  name: void
+  name: production
 spec:
   workspace: coral-applications
   selector:
-    environment: dev
-    type: void
+    environment: prod
+    type: airplane

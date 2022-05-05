@@ -1,0 +1,9 @@
+kind: Cluster
+metadata:
+  name: prod-airplane
+  labels:
+    type: airplane
+    edge: yes
+spec:
+  environments:
+    - prod

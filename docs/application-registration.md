@@ -6,7 +6,7 @@ These steps include [creating an app.yaml](https://github.com/microsoft/coral-se
 
 > **Note**
 >
-> The BigBang control plane seed creates a default workspace (called `coral-applications`) with a default target (called `void`). By default, all applications will be registered to this workspace. Additionally, the target is simply a template for the platform team to modify as needed. It is not intended to have clusters associated to it, and as deployed, the target could be used only to test the registration process.
+> The BigBang control plane seed creates a default workspace (called `coral-applications`) with default targets (`development` and `production`). By default, all applications will be registered to this workspace. Additionally, these targets are based off the sample edge clusters provided in this repo (`dev-airplane` and `prod-airplane`) and simply provide a starting point. Platform teams are encouraged to modify as needed.
 
 ## The BigBang application registration process
 

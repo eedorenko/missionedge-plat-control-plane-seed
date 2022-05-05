@@ -1,0 +1,9 @@
+kind: Cluster
+metadata:
+  name: dev-airplane
+  labels:
+    type: airplane
+    edge: yes
+spec:
+  environments:
+    - dev
