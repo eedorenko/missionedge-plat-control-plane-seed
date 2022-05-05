@@ -21,4 +21,4 @@ To get started, see the [platform setup instructions](https://github.com/microso
 
 ## BigBang seed specifics
 
-This control plane repo seed has been customized to deploy specific BigBang services. Additionally, since this instance assumes that the neither the UI portal nor the API will be used for management of the platform, a workflow in this repo is used to [register a new application with Coral](./docs/application-registration.md), whereas a repo in each application's repo is used to [trigger an application refresh](docs/application-refresh.md).
+This control plane repo seed has been customized to deploy specific BigBang services. Additionally, since this instance assumes that the neither the UI portal nor the API will be used for management of the platform, a workflow in this repo is used to [register a new application with Coral](./docs/application-registration.md), whereas a workflow in each application's repo is used to [trigger an application refresh](docs/application-refresh.md).
