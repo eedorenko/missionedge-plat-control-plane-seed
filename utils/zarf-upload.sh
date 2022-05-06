@@ -143,11 +143,11 @@ check_if_zarf_exists () {
 }
 
 package_zarf () {
-    echo "Packaging Zarf..."
+    echo "Packaging Zarf. This may take a few minutes."
     local exit_code=0
     zarf package create --confirm &> /dev/null || exit_code=$?
     if [ ${exit_code} -eq 0 ]; then
-      echo "Done packagin Zarf."
+      echo "Done packaging Zarf."
     else
       echo "Error in packaging Zarf. Please ensure Container Registry Credentials are correct."
       exit 1

@@ -1,3 +1,4 @@
+name: Zarf Package and Upload
 ########
 # Usage:
 # * Update env.GIT_OPS_REPO with the Cluster GitOps Repo name
