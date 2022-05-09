@@ -12,7 +12,7 @@ These steps include [creating an app.yaml](https://github.com/microsoft/coral-se
 
 ### Pre-requisites
 
-As a pre-requirement, the register-application workflow will be run using a specific Personal Access Token. This allows separation between the application registration and deployment activities from the rest of the activities in the Coral platform.
+The [register-application workflow](../.github/workflows/register-application.yaml) runs using a specific Personal Access Token. This allows separation between the application registration and deployment activities from the rest of the activities in the Coral platform.
 
 To register and subsequently trigger application deployment requests, create a PAT with `repo` scope and store it in this control plane repo with the name `CP_REPO_RENDER_TOKEN`.
 

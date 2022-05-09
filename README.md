@@ -29,6 +29,7 @@ The control plane repo keeps track of information in a set of folders and files,
 - `clusters` - defines the `Clusters` in your platform ([sample](https://github.com/microsoft/coral/blob/main/docs/samples/Cluster.yaml))
 - `manifests` - holds Kubernetes YAML for use with `ManifestDeployments`
 - `templates` - defines the available `ApplicationTemplates` in your platform ([sample](https://github.com/microsoft/coral/blob/main/docs/samples/ApplicationTemplate.yaml))
+- `utils` - holds scripts and templates for Zarf package management.
 - `workspaces` - defines the `Workspaces` in your platform ([sample](https://github.com/microsoft/coral/blob/main/docs/samples/Workspace.yaml))
 
 ## See Also
