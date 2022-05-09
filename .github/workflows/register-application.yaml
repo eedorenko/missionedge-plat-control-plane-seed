@@ -42,11 +42,7 @@ on:
         default: app.yaml
 
 env:
-  # TODO: Replace this with your own repository
-  GITOPS_REPO: MS-Santi/samplego
   CORAL_LOG_FILE: coral.log
-  AZURE_LOG_ANALYTICS_KEY: ${{ secrets.AZURE_LOG_ANALYTICS_KEY }}
-  AZURE_LOG_ANALYTICS_WORKSPACE_ID: ${{ secrets.AZURE_LOG_ANALYTICS_WORKSPACE_ID }}
 
   ORG: ${{ github.event.inputs.orgName }}
   APP_REPO: ${{ github.event.inputs.appRepo }}        
