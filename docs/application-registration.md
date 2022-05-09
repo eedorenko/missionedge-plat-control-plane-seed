@@ -12,7 +12,7 @@ These steps include [creating an app.yaml](https://github.com/microsoft/coral-se
 
 ### Pre-requisites
 
-As a pre-requirement, the workflow will be run using a specific Personal Access Token. This allows separation between the application registration and deployment activities from the rest of the activities in the Coral platform.
+As a pre-requirement, the application registration workflow will be run using a specific Personal Access Token. This allows separation between the application registration and deployment activities from the rest of the activities in the Coral platform.
 
 To register and subsequently trigger application deployment requests, create a PAT with `repo` scope and store it in this control plane repo with the name `CP_REPO_RENDER_TOKEN`.
 
@@ -22,7 +22,7 @@ To register the application, the platform team will go to the control plane repo
 
 ![Triggering the "Register New Application" workflow](media/app-registration-ui.jpg)
 
-Although parameters are self-explanatory, here is some more information about them:
+The workflow uses the following parameters:
 
 |Parameter|Comments|
 |-|-|
@@ -37,11 +37,11 @@ Although parameters are self-explanatory, here is some more information about th
 
 Registering an application using the application registration workflow accomplishes three things:
 
-1. Updates this control plane repo with metadata of the application that is being registered
+1. **Updates this control plane repo with metadata of the application that is being registered**
 
     This first step will create a reference in the default `coral-applications` workspace. Note that if other workspaces are required, the workflow needs to be adjusted properly, since it only considers the default workspace.
   
-1. Updates the application's repo to configure the required information about this control repo for when an deployment request is needed.
+1. **Updates the application's repo to configure the required information about this control repo for when an deployment request is needed**
 
    This next step stores three secrets in the application repo. This is possible because the workflow with use the token with permissions to write to the application repo (passed as parameters for `App repo GitHub PAT with "repo" scope (to allow this workflow to write back in the application repo)`)
 
@@ -51,7 +51,7 @@ Registering an application using the application registration workflow accomplis
    * `CP_REF`: This is the branch that contains the version of the workflow to run (passed as parameter for `Reference of the control plane workflow version to be invoked`)
    * `CP_REPO_TOKEN`: This is the token with permissions to trigger the transformation (deployment) workflow in the control plane repo (configured as the pre-requisite `CP_REPO_RENDER_TOKEN` secret in the control plane repo)
 
-1. Triggers an initial deployment request for the application
+1. **Triggers an initial deployment request for the application**
 
    Using the token stored in the `CP_REPO_RENDER_TOKEN` secret, it triggers the `Process Platform Change Requests` (transform.yaml) workflow, so that Coral processes the new registration.
 
