@@ -12,7 +12,7 @@ These steps include [creating an app.yaml](https://github.com/microsoft/coral-se
 
 ### Pre-requisites
 
-As a pre-requirement, the application registration workflow will be run using a specific Personal Access Token. This allows separation between the application registration and deployment activities from the rest of the activities in the Coral platform.
+As a pre-requirement, the register-application workflow will be run using a specific Personal Access Token. This allows separation between the application registration and deployment activities from the rest of the activities in the Coral platform.
 
 To register and subsequently trigger application deployment requests, create a PAT with `repo` scope and store it in this control plane repo with the name `CP_REPO_RENDER_TOKEN`.
 
@@ -27,8 +27,8 @@ The workflow uses the following parameters:
 |Parameter|Comments|
 |-|-|
 |Use workflow from|This specifies which version of the workflow to run in this specific workflow run|
-|Organization or Github user name of the application repo|If the application repo is at https://github.com/a-name/a-repo-name, this value would be `a-name`|
-|Bare name of the application repo|If the application repo is at https://github.com/a-name/a-repo-name, this value would be `a-repo-name`|
+|Organization or Github user name of the application repo|If the application repo is at [https://github.com/a-name/a-repo-name](https://github.com/a-name/a-repo-name), this value would be `a-name`|
+|Bare name of the application repo|If the application repo is at [https://github.com/a-name/a-repo-name](https://github.com/a-name/a-repo-name), this value would be `a-repo-name`|
 |Reference of the control plane workflow version to be invoked|This specifies which version of the workflow be configured to run in the application repo|
 |App repo GitHub PAT with "repo" scope (to allow this workflow to write back in the application repo)|This token with access to the application repo is required because this workflow needs to write to that repo to configure it. It is used for one run only and it is not stored. It can have a very short expiration time.|
 |Name of the application to be registered|Name of the application as it will appear in the Coral platform. Simple identifier without special characters.|
