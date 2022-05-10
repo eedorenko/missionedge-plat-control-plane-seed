@@ -9,7 +9,7 @@ git:
   existingSecret: "zarf-git-secret"
 
 networkPolicies:
-  enabled: true
+  enabled: false
   # When in prod use a real CIDR. Don't do this, it isn't secure. This is done here since it is a demo and the CIDR changes based on which Linux distro you are running on.
   controlPlaneCidr: "0.0.0.0/0"
   nodeCidr: "0.0.0.0/0"
@@ -258,12 +258,14 @@ kiali:
             limits:
               cpu: "200m"
               memory: "368Mi"
+        auth:
+          strategy: anonymous
     svcPatchJob:
       image:
         repository: "###ZARF_REGISTRY###/ironbank/big-bang/base"
 
 clusterAuditor:
-  enabled: true
+  enabled: false
   git:
     repo: http://zarf-gitea-http.zarf.svc.cluster.local:3000/zarf-git-user/mirror__repo1.dso.mil__platform-one__big-bang__apps__core__cluster-auditor.git
   values:
@@ -278,7 +280,7 @@ clusterAuditor:
         memory: "300Mi"
 
 gatekeeper:
-  enabled: true
+  enabled: false
   git:
     repo: http://zarf-gitea-http.zarf.svc.cluster.local:3000/zarf-git-user/mirror__repo1.dso.mil__platform-one__big-bang__apps__core__policy.git
   values:
@@ -336,7 +338,7 @@ gatekeeper:
             - "istio-system/lb-port-.*"
 
 logging:
-  enabled: true
+  enabled: false
   git:
     repo: http://zarf-gitea-http.zarf.svc.cluster.local:3000/zarf-git-user/mirror__repo1.dso.mil__platform-one__big-bang__apps__core__elasticsearch-kibana.git
   values:
@@ -380,7 +382,7 @@ logging:
         image: "###ZARF_REGISTRY###/ironbank/stedolan/jq:1.6"
 
 eckoperator:
-  enabled: true
+  enabled: false
   git:
     repo: http://zarf-gitea-http.zarf.svc.cluster.local:3000/zarf-git-user/mirror__repo1.dso.mil__platform-one__big-bang__apps__core__eck-operator.git
   values:
@@ -398,7 +400,7 @@ eckoperator:
         repository: "###ZARF_REGISTRY###/ironbank/big-bang/base"
 
 fluentbit:
-  enabled: true
+  enabled: false
   git:
     repo: http://zarf-gitea-http.zarf.svc.cluster.local:3000/zarf-git-user/mirror__repo1.dso.mil__platform-one__big-bang__apps__core__fluentbit.git
   values:
@@ -550,7 +552,7 @@ monitoring:
             memory: "2Gi"
 
 twistlock:
-  enabled: true
+  enabled: false
   git:
     repo: http://zarf-gitea-http.zarf.svc.cluster.local:3000/zarf-git-user/mirror__repo1.dso.mil__platform-one__big-bang__apps__security-tools__twistlock.git
   values:
