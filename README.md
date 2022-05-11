@@ -34,7 +34,7 @@ The control plane repo keeps track of information in a set of folders and files,
 
 ## Customizations
 
-This repo doesn't require any customizations.
+After importing this repo to GiHub it should be [marked as a template](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-template-repository). 
 
 ## See Also
 
