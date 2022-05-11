@@ -32,6 +32,10 @@ The control plane repo keeps track of information in a set of folders and files,
 - `utils` - holds scripts and templates for Zarf package management.
 - `workspaces` - defines the `Workspaces` in your platform ([sample](https://github.com/microsoft/coral/blob/main/docs/samples/Workspace.yaml))
 
+## Customizations
+
+This repo doesn't require any customizations.
+
 ## See Also
 
 - [Register a new application with Coral](./docs/application-registration.md)
