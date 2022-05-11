@@ -1,0 +1,7 @@
+kind: ApplicationTemplate
+metadata:
+  name: app-manifests
+spec:
+  repo: https://github.com/vyta/bigbang-control-plane
+  ref: eedorenko/app-deploy-flow
+  path: templates/app-manifests/template.yaml

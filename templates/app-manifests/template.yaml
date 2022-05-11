@@ -1,0 +1,7 @@
+manifests: ./flux
+parameters:
+  repository: {}
+  branch: {}
+  folder: {}
+  zarf_image: {}
+

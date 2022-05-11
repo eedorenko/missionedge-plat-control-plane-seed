@@ -1,0 +1,14 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: {{coral.app}}
+  namespace: flux-system
+  labels:
+  {{#coral.labels}}
+    {{key}}: {{value}}
+  {{/coral.labels}}
+spec:
+  interval: 1m0s
+  ref:
+    branch: {{branch}}
+  url: {{repository}}
