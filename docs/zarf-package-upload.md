@@ -30,7 +30,11 @@ To package and upload zarf, the platform team will go to the control plane repo 
 |Parameter|Comments|
 |-|-|
 |Use workflow from|This specifies which version of the workflow to run in this specific workflow run|
-| Cluster names| This is a comma separated value of cluster names. These cluster names are defined in both Control Plane Repo and GitOps Repo. See [clusters dir](../clusters/). You can set the value to `all` and it will package zarf for all clusters defined.|
+| names| This is a comma separated value of cluster or app names. These cluster and application names are defined in both Control Plane Repo and GitOps Repo. See [cluster directory](../clusters/) for clusters and [applications directory](../applications/) for applications. You can set the value to `all` and it will package zarf for all clusters or apps (in a specified workspace and environment) defined. This is required.|
+| scope | Either `cluster` or `application`. This will execute zarf package create either on a cluster or application level. This is required. |
+| app_workspace | This is the workspace that contains the application for zarf packaging. See [workspace directory](../workspaces/). This is required when scope is application. |
+| app_env | Choose a target environment defined for the application. This is optional with default value set to `production`|
+| version | This is the version that is used for the Blob name suffix uploaded to Storage Account. This is optional. |
 
 
 ![Triggering the "Zarf Package and Upload" workflow](media/zarf-package-upload.png)

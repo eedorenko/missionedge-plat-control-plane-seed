@@ -21,9 +21,26 @@ name: Zarf Package and Upload
 on:
   workflow_dispatch:
     inputs:
-      cluster_names:
-        description: 'Cluster names'
+      names:
+        description: 'Comma separated application or cluster names'
         required: true
+        type: string
+      scope:
+        description: 'cluster or application'
+        required: true
+        type: string
+      app_workspace:
+        description: 'App Workspace. Required if scope is application'
+        required: false
+        type: string
+      app_env:
+        description: 'App Environment'
+        required: false
+        default: 'production'
+        type: string
+      version:
+        description: 'Zarf tarball Version'
+        required: false
         type: string
 
 concurrency: upload
@@ -35,10 +52,9 @@ env:
   STORAGE_ACCOUNT_RESOURCE_GROUP: <Replace with Azure Resource Group name with existing Storage Account>
   STORAGE_ACCOUNT_NAME: <Replace with Azure storage account name>
   CONTAINER_REGISTRY: <Replace with Container Registry url>
-  GITHUB_TOKEN: ${{ secrets.GITOPS_PAT }}  
-  CONTAINER_REGISTRY_USERNAME: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}  
-  CONTAINER_REGISTRY_SECRET: ${{ secrets.CONTAINER_REGISTRY_SECRET }}  
-
+  GITHUB_TOKEN: ${{ secrets.GITOPS_PAT }}
+  CONTAINER_REGISTRY_USERNAME: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
+  CONTAINER_REGISTRY_SECRET: ${{ secrets.CONTAINER_REGISTRY_SECRET }}
 jobs:
   upload:
     runs-on: ubuntu-latest
@@ -63,4 +79,4 @@ jobs:
       run: |
         sudo ./utils/zarf-install.sh
         export PATH="$PWD:${PATH}"        
-        ./utils/zarf-upload.sh --clusters "${{ github.event.inputs.cluster_names }}"
+        ./utils/zarf-upload.sh --names "${{ github.event.inputs.names }}" --scope "${{ github.event.inputs.scope }}" --app-workspace "${{ github.event.inputs.app_workspace }}" --app-env "${{ github.event.inputs.app_env }}" --version "${{ github.event.inputs.version }}"
